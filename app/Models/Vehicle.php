@@ -5,14 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Technician extends Model
+class Vehicle extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'phone',
+        'customer_id',
+        'plate_number',
+        'model',
+        'year'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
 
     public function services()
     {
