@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -11,7 +12,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::latest()->paginate(10);
+        return view('customers.index', compact('customers'));
     }
 
     /**
@@ -27,7 +29,15 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required'
+        ]);
+
+        Customer::create($request->all());
+
+        return redirect()->route('customers.index')
+            ->with('success', 'Customer ditambahkan');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Vehicle;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -19,7 +21,8 @@ class VehicleController extends Controller
      */
     public function create()
     {
-        //
+        $customers = Customer::all();
+        return view('vehicles.create', compact('customers'));
     }
 
     /**
@@ -27,7 +30,16 @@ class VehicleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'customer_id' => 'required',
+            'plate_number' => 'required',
+            'model' => 'required'
+        ]);
+
+        Vehicle::create($request->all());
+
+        return redirect()->route('vehicles.index')
+            ->with('success', 'Kendaraan ditambahkan');
     }
 
     /**
