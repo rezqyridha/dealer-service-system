@@ -5,10 +5,10 @@
             <div class="p-6 bg-white border-b border-gray-200">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-bold text-gray-800">
-                        Detail Pelanggan
+                        Detail Teknisi
                     </h2>
                     <a
-                        href="{{ route('customers.index') }}"
+                        href="{{ route('technicians.index') }}"
                         class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
                     >
                         Kembali
@@ -23,13 +23,13 @@
                 </div>
                 @endif
 
-                <div class="grid grid-cols-2 gap-6">
+                <div class="grid grid-cols-2 gap-6 mb-8">
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2"
                             >Nama</label
                         >
                         <p class="text-gray-800 text-lg font-bold">
-                            {{ $customer->name }}
+                            {{ $technician->name }}
                         </p>
                     </div>
 
@@ -37,14 +37,27 @@
                         <label class="block text-gray-700 font-semibold mb-2"
                             >No Telepon</label
                         >
-                        <p class="text-gray-800">{{ $customer->phone }}</p>
+                        <p class="text-gray-800">{{ $technician->phone }}</p>
                     </div>
 
-                    <div class="col-span-2">
+                    <div>
                         <label class="block text-gray-700 font-semibold mb-2"
-                            >Alamat</label
+                            >Spesialisasi</label
                         >
-                        <p class="text-gray-800">{{ $customer->address }}</p>
+                        <span
+                            class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold"
+                        >
+                            {{ $technician->specialization }}
+                        </span>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2"
+                            >Total Servis</label
+                        >
+                        <p class="text-gray-800 text-lg font-bold">
+                            {{ $technician->services->count() }}
+                        </p>
                     </div>
 
                     <div>
@@ -52,7 +65,7 @@
                             >Dibuat Tanggal</label
                         >
                         <p class="text-gray-700">
-                            {{ $customer->created_at->format('d/m/Y H:i') }}
+                            {{ $technician->created_at->format('d/m/Y H:i') }}
                         </p>
                     </div>
 
@@ -61,20 +74,25 @@
                             >Diperbarui Tanggal</label
                         >
                         <p class="text-gray-700">
-                            {{ $customer->updated_at->format('d/m/Y H:i') }}
+                            {{ $technician->updated_at->format('d/m/Y H:i') }}
                         </p>
                     </div>
                 </div>
 
                 <div class="mt-8 border-t pt-6">
                     <h3 class="text-lg font-bold text-gray-800 mb-4">
-                        Kendaraan Milik Pelanggan
+                        Riwayat Servis
                     </h3>
-                    @if ($customer->vehicles->count() > 0)
+                    @if ($technician->services->count() > 0)
                     <div class="overflow-x-auto">
                         <table class="w-full table-auto">
                             <thead>
                                 <tr class="bg-gray-100">
+                                    <th
+                                        class="px-4 py-2 text-left text-gray-700 font-semibold"
+                                    >
+                                        Kode Servis
+                                    </th>
                                     <th
                                         class="px-4 py-2 text-left text-gray-700 font-semibold"
                                     >
@@ -83,28 +101,45 @@
                                     <th
                                         class="px-4 py-2 text-left text-gray-700 font-semibold"
                                     >
-                                        Model
+                                        Jenis Servis
                                     </th>
                                     <th
                                         class="px-4 py-2 text-left text-gray-700 font-semibold"
                                     >
-                                        Tahun
+                                        Tanggal
+                                    </th>
+                                    <th
+                                        class="px-4 py-2 text-left text-gray-700 font-semibold"
+                                    >
+                                        Status
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($customer->vehicles as $vehicle)
+                                @foreach ($technician->services as $service)
                                 <tr
                                     class="border-t border-gray-200 hover:bg-gray-50"
                                 >
-                                    <td class="px-4 py-3 font-semibold">
-                                        {{ $vehicle->plate_number }}
+                                    <td
+                                        class="px-4 py-3 font-semibold text-blue-600"
+                                    >
+                                        {{ $service->service_code }}
                                     </td>
                                     <td class="px-4 py-3">
-                                        {{ $vehicle->model }}
+                                        {{ $service->vehicle->plate_number }}
                                     </td>
                                     <td class="px-4 py-3">
-                                        {{ $vehicle->year }}
+                                        {{ $service->service_type }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {{ \Carbon\Carbon::parse($service->service_date)->format('d/m/Y') }}
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <span
+                                            class="px-3 py-1 rounded-full text-white font-semibold text-sm @if ($service->status === 'pending') bg-yellow-500 @elseif ($service->status === 'done') bg-green-500 @elseif ($service->status === 'cancelled') bg-red-500 @else bg-gray-500 @endif"
+                                        >
+                                            {{ ucfirst($service->status) }}
+                                        </span>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -112,19 +147,19 @@
                         </table>
                     </div>
                     @else
-                    <p class="text-gray-500">Tidak ada kendaraan</p>
+                    <p class="text-gray-500">Tidak ada riwayat servis</p>
                     @endif
                 </div>
 
                 <div class="mt-6 flex gap-2">
                     <a
-                        href="{{ route('customers.edit', $customer) }}"
+                        href="{{ route('technicians.edit', $technician) }}"
                         class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded"
                     >
                         Edit
                     </a>
                     <form
-                        action="{{ route('customers.destroy', $customer) }}"
+                        action="{{ route('technicians.destroy', $technician) }}"
                         method="POST"
                         class="inline"
                         onsubmit="return confirm('Yakin ingin menghapus?')"
