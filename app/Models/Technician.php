@@ -12,6 +12,7 @@ class Technician extends Model
     protected $fillable = [
         'name',
         'phone',
+        'specialization',
     ];
 
     public function services()

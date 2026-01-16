@@ -13,9 +13,27 @@ class TechnicianSeeder extends Seeder
     public function run(): void
     {
         Technician::insert([
-            ['name' => 'Budi', 'phone' => '08123456789'],
-            ['name' => 'Andi', 'phone' => '08234567890'],
-            ['name' => 'Slamet', 'phone' => '08345678901'],
+            [
+                'name' => 'Budi',
+                'phone' => '08123456789',
+                'specialization' => 'Mesin & Transmisi',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Andi',
+                'phone' => '08234567890',
+                'specialization' => 'Elektrik & Battery',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Slamet',
+                'phone' => '08345678901',
+                'specialization' => 'AC & Pendingin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

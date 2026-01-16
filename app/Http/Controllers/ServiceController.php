@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\Vehicle;
 use App\Models\Technician;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreServiceRequest;
+use App\Http\Requests\UpdateServiceRequest;
 use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
@@ -26,14 +27,8 @@ class ServiceController extends Controller
         return view('services.create', compact('vehicles', 'technicians'));
     }
 
-    public function store(Request $request)
+    public function store(StoreServiceRequest $request)
     {
-        $request->validate([
-            'vehicle_id' => 'required',
-            'technician_id' => 'required',
-            'service_date' => 'required|date',
-            'service_type' => 'required'
-        ]);
 
         $today = now()->format('Ymd');
         $countToday = Service::whereDate('created_at', now())->count() + 1;
@@ -68,11 +63,9 @@ class ServiceController extends Controller
         return view('services.edit', compact('service', 'vehicles', 'technicians'));
     }
 
-    public function update(Request $request, Service $service)
+    public function update(UpdateServiceRequest $request, Service $service)
     {
-        $service->update([
-            'status' => $request->status
-        ]);
+        $service->update($request->validated());
 
         return back()->with('success', 'Status servis diperbarui');
     }

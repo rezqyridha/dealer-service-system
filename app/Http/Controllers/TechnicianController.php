@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Technician;
+use App\Http\Requests\StoreTechnicianRequest;
+use App\Http\Requests\UpdateTechnicianRequest;
 
 class TechnicianController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $technicians = Technician::latest()->paginate(10);
+        return view('technicians.index', compact('technicians'));
     }
 
     /**
@@ -25,9 +25,11 @@ class TechnicianController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTechnicianRequest $request)
     {
-        //
+        Technician::create($request->validated());
+        return redirect()->route('technicians.index')
+            ->with('success', 'Teknisi berhasil ditambahkan');
     }
 
     /**
@@ -49,16 +51,20 @@ class TechnicianController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateTechnicianRequest $request, Technician $technician)
     {
-        //
+        $technician->update($request->validated());
+        return redirect()->route('technicians.index')
+            ->with('success', 'Teknisi berhasil diperbarui');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Technician $technician)
     {
-        //
+        $technician->delete();
+        return redirect()->route('technicians.index')
+            ->with('success', 'Teknisi berhasil dihapus');
     }
 }

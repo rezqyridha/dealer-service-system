@@ -6,6 +6,7 @@ use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('customers', CustomerController::class);
         Route::resource('vehicles', VehicleController::class);
         Route::resource('services', ServiceController::class);
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::post('/reports/export-pdf', [ReportController::class, 'exportPdf'])->name('reports.export-pdf');
+        Route::post('/reports/export-excel', [ReportController::class, 'exportExcel'])->name('reports.export-excel');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

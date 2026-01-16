@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Vehicle;
 use App\Models\Customer;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreVehicleRequest;
+use App\Http\Requests\UpdateVehicleRequest;
 
 class VehicleController extends Controller
 {
@@ -28,15 +29,9 @@ class VehicleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVehicleRequest $request)
     {
-        $request->validate([
-            'customer_id' => 'required',
-            'plate_number' => 'required',
-            'model' => 'required'
-        ]);
-
-        Vehicle::create($request->all());
+        Vehicle::create($request->validated());
 
         return redirect()->route('vehicles.index')
             ->with('success', 'Kendaraan ditambahkan');
@@ -61,16 +56,20 @@ class VehicleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateVehicleRequest $request, Vehicle $vehicle)
     {
-        //
+        $vehicle->update($request->validated());
+        return redirect()->route('vehicles.index')
+            ->with('success', 'Kendaraan diperbarui');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Vehicle $vehicle)
     {
-        //
+        $vehicle->delete();
+        return redirect()->route('vehicles.index')
+            ->with('success', 'Kendaraan dihapus');
     }
 }
