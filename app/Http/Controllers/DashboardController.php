@@ -12,12 +12,14 @@ class DashboardController extends Controller
 
         $totalToday = Service::whereDate('service_date', $today)->count();
         $doneToday = Service::whereDate('service_date', $today)
-                            ->where('status', 'done')->count();
+            ->where('status', 'done')->count();
         $pendingToday = Service::whereDate('service_date', $today)
-                               ->where('status', 'pending')->count();
+            ->where('status', 'pending')->count();
 
         return view('dashboard', compact(
-            'totalToday', 'doneToday', 'pendingToday'
+            'totalToday',
+            'doneToday',
+            'pendingToday'
         ));
     }
 }
