@@ -14,7 +14,8 @@ class VehicleController extends Controller
      */
     public function index()
     {
-        //
+        $vehicles = Vehicle::latest()->paginate(10);
+        return view('vehicles.index', compact('vehicles'));
     }
 
     /**
@@ -40,17 +41,19 @@ class VehicleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Vehicle $vehicle)
     {
-        //
+        $vehicle->load('customer');
+        return view('vehicles.show', compact('vehicle'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Vehicle $vehicle)
     {
-        //
+        $customers = Customer::all();
+        return view('vehicles.edit', compact('vehicle', 'customers'));
     }
 
     /**

@@ -19,7 +19,7 @@ class TechnicianController extends Controller
      */
     public function create()
     {
-        //
+        return view('technicians.create');
     }
 
     /**
