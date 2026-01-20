@@ -19,6 +19,10 @@ class Service extends Model
         'created_by'
     ];
 
+    protected $casts = [
+        'service_date' => 'datetime',
+    ];
+
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
