@@ -35,17 +35,17 @@ class TechnicianController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Technician $technician)
     {
-        //
+        return view('technicians.show', compact('technician'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Technician $technician)
     {
-        //
+        return view('technicians.edit', compact('technician'));
     }
 
     /**
