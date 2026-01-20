@@ -7,6 +7,134 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+# Dealer Service Management System
+
+## 📌 Gambaran Umum
+
+**Dealer Service Management System** adalah aplikasi web berbasis **Laravel Framework** yang dirancang untuk membantu pengelolaan proses servis kendaraan pada dealer atau bengkel resmi. Sistem ini mendigitalisasi pencatatan servis, pengelolaan data pelanggan dan kendaraan, serta pemantauan status servis secara terstruktur dan efisien.
+
+Aplikasi ini dikembangkan sebagai **proyek portofolio** dengan pendekatan sistem yang umum digunakan di lingkungan kerja nyata, khususnya pada dealer kendaraan seperti Mitsubishi.
+
+---
+
+## 🎯 Tujuan Pengembangan
+
+- Menyediakan sistem pencatatan servis kendaraan yang terorganisir
+- Meningkatkan efisiensi operasional bengkel/dealer
+- Mempermudah pemantauan status servis harian
+- Menjadi bukti kemampuan implementasi Laravel dalam proyek nyata
+
+---
+
+## 🚀 Fitur Utama
+
+- **Autentikasi & Hak Akses**
+    - Sistem login dengan role **Admin** dan **Service Advisor**
+    - Role-based access control menggunakan middleware
+
+- **Manajemen Pelanggan**
+    - Pencatatan data pelanggan
+    - Relasi pelanggan dengan kendaraan
+
+- **Manajemen Kendaraan**
+    - Data kendaraan lengkap (plat, model, tahun)
+    - Riwayat servis kendaraan
+
+- **Manajemen Servis Kendaraan**
+    - Pencatatan servis kendaraan
+    - Generate **kode servis otomatis**
+    - Status servis (_Pending / Done_)
+    - Penugasan teknisi
+
+- **Dashboard Statistik**
+    - Total servis harian
+    - Servis selesai dan pending
+    - Ringkasan aktivitas servis
+
+- **Laporan & Ekspor Data**
+    - Ekspor laporan servis
+    - Mendukung format PDF / Excel (opsional)
+
+- **Antarmuka Pengguna**
+    - UI bersih dan responsif
+    - Layout berbasis dashboard untuk kemudahan navigasi
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+- **Backend:** Laravel (PHP)
+- **Frontend:** Blade Template, Tailwind CSS, Vite
+- **Database:** MySQL
+- **ORM:** Eloquent
+- **Authentication:** Laravel Breeze
+- **Testing:** PHPUnit
+- **Version Control:** Git & GitHub
+
+---
+
+## 👤 Akun Demo
+
+| Role            | Email            | Password |
+| --------------- | ---------------- | -------- |
+| Admin           | admin@mail.com   | password |
+| Service Advisor | advisor@mail.com | password |
+
+---
+
+## ⚙️ Cara Menjalankan Aplikasi
+
+1. **Clone repository:**
+
+    ```bash
+    git clone https://github.com/username/dealer-service-system.git
+    cd dealer-service-system
+    ```
+
+2. **Install dependensi PHP:**
+
+    ```bash
+    composer install
+    ```
+
+3. **Salin file environment:**
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4. **Konfigurasi database** pada file `.env` sesuai pengaturan lokal Anda.
+
+5. **Generate application key:**
+
+    ```bash
+    php artisan key:generate
+    ```
+
+6. **Jalankan migrasi dan seeder:**
+
+    ```bash
+    php artisan migrate --seed
+    ```
+
+7. **Jalankan server aplikasi:**
+
+    ```bash
+    php artisan serve
+    ```
+
+8. **Akses aplikasi** melalui browser di alamat:
+
+    http://127.0.0.1:8000
+
+    ```bash
+    php artisan serve
+    ```
+
+9. Akses aplikasi melalui browser:
+
+    http://127.0.0.1:8000
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
